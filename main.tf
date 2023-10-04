@@ -29,7 +29,7 @@ resource "bindplane_destination" "newrelic" {
     [
       {
         "name": "endpoint",
-        "value": "https://otlp.nr-data.net"
+        "value": "https://otlp.nr-data.com"
       },
       {
         "name": "license_key",
