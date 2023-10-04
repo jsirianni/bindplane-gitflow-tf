@@ -20,6 +20,9 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        env:
+          BINDPLANE_TF_API_KEY: ${{ secrets.BINDPLANE_API_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Terraform Plan
         id: plan
