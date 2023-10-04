@@ -14,6 +14,14 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Install Gcloud SDK
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
@@ -22,7 +30,6 @@ jobs:
         run: terraform init
         env:
           BINDPLANE_TF_API_KEY: ${{ secrets.BINDPLANE_API_KEY }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Terraform Plan
         id: plan
@@ -31,7 +38,6 @@ jobs:
         continue-on-error: true
         env:
           BINDPLANE_TF_API_KEY: ${{ secrets.BINDPLANE_API_KEY }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
@@ -70,4 +76,3 @@ jobs:
             -auto-approve
         env:
           BINDPLANE_TF_API_KEY: ${{ secrets.BINDPLANE_API_KEY }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
